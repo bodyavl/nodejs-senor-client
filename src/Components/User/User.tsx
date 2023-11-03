@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 interface UserProps {
-  id: number;
+  id: string;
   email: string;
   role: string;
 }
