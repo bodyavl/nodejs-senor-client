@@ -13,11 +13,11 @@ import { setContext } from "@apollo/client/link/context";
 const httpLink = new HttpLink({ uri: "http://localhost:8080/graphql" });
 
 const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("accessToken");
   return {
     headers: {
       ...headers,
-      authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcklkIjoiZDA5ODY4N2MtMTBmMS00MzFlLTgwMTctMzU1M2QzMmRjODdjIiwiZW1haWwiOiJ0ZXN0MkBlbWFpbC5jb20iLCJpYXQiOjE2OTkwNDI4ODcsImV4cCI6MTY5OTA0NjQ4N30.nXl_Q0MkWDijYdVjK2Lzahomm7evpg_wZm0mPTa8F6c",
+      authorization: `Bearer ${token}`,
     },
   };
 });
