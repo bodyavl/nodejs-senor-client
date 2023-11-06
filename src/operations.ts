@@ -18,3 +18,12 @@ export const GET_CUSTOMERS = gql`
     }
   }
 `;
+
+export const REFRESH_TOKENS = gql`
+  mutation refreshTokens {
+    refreshTokens {
+      accessToken
+      refreshToken
+    }
+  }
+`;

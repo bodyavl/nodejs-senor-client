@@ -17,10 +17,12 @@ function App() {
         variables: { email: "test2@email.com", password: "test" },
       });
 
-      if (loginData?.signIn.accessToken)
+      if (loginData?.signIn.accessToken && loginData?.signIn.refreshToken) {
         localStorage.setItem("accessToken", loginData?.signIn.accessToken);
+        localStorage.setItem("refreshToken", loginData?.signIn.refreshToken);
+      }
     }
-    init();
+    // init();
   }, []);
 
   if (loading) return <p>Loading...</p>;

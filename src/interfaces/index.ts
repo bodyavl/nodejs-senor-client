@@ -7,3 +7,8 @@ export interface ICustomer {
   email: string;
   role: Role;
 }
+
+export interface JwtTokens {
+  accessToken: string;
+  refreshToken: string;
+}
