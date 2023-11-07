@@ -1,19 +1,19 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 
 interface UserProps {
   id: string;
   email: string;
-  role: string;
 }
 
-export const User: FC<UserProps> = ({ id, email, role }) => {
+export const User: FC<UserProps> = ({ id, email }) => {
   return (
     <>
       <h2>
-        {id} {email}
+        <Link to={`/details/${id}`}>{id}</Link>
+        <br />
+        {email}
       </h2>
-      <h4>Role: {role}</h4>
-      <br />
     </>
   );
 };

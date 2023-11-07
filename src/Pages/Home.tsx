@@ -19,14 +19,12 @@ const Home = () => {
 
   return (
     <>
-      <Link to="/login">Login</Link>
+      <Link to="/login">Log In</Link>
+      <br />
+      <Link to="/signup">Sign Up</Link>
+
       {data?.customers.map((customer) => (
-        <User
-          key={customer.id}
-          id={customer.id}
-          email={customer.email}
-          role={customer.role}
-        />
+        <User key={customer.id} id={customer.id} email={customer.email} />
       ))}
     </>
   );
