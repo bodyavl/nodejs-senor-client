@@ -13,7 +13,7 @@ const Home = () => {
 
   if (loading) return <p>Loading...</p>;
 
-  if (error?.message === "UNAUTHENTICATED") navigate("/login");
+  if (error?.message === "Unauthorized") navigate("/login");
 
   if (error) return <p>Error : {error.message}</p>;
 

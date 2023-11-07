@@ -1,10 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetCustomerQuery } from "../genetated/types";
 import DetailedUser from "../Components/DetailedUser/DetailedUser";
 import { Link } from "react-router-dom";
 
 const Details = () => {
   const { id } = useParams() as { id: string };
+
+  const navigate = useNavigate();
 
   const { loading, error, data } = useGetCustomerQuery({
     variables: {
@@ -13,6 +15,8 @@ const Details = () => {
   });
 
   if (loading) return <p>Loading...</p>;
+  if (error?.message === "Unauthorized") navigate("/login");
+
   if (error) return <p>Error : {error.message}</p>;
 
   return (
