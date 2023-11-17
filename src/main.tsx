@@ -44,37 +44,38 @@ const authLink = setContext((operation, { headers }) => {
 const errorLink = onError(
   ({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
-      for (let err of graphQLErrors) {
+      for (const err of graphQLErrors) {
         switch (err.extensions.code) {
           case "UNAUTHENTICATED":
             // ignore 401 error for a refresh request
             if (operation.operationName === "refreshTokens") return;
 
-            const observable = new Observable<FetchResult<Record<string, any>>>(
-              (observer) => {
-                // used an annonymous function for using an async function
-                (async () => {
-                  try {
-                    const { accessToken } = await refreshToken();
+            // eslint-disable-next-line no-case-declarations
+            const observable = new Observable<
+              FetchResult<Record<string, unknown>>
+            >((observer) => {
+              // used an annonymous function for using an async function
+              (async () => {
+                try {
+                  const { accessToken } = await refreshToken();
 
-                    if (!accessToken) {
-                      throw new GraphQLError("Empty AccessToken");
-                    }
-
-                    // Retry the failed request
-                    const subscriber = {
-                      next: observer.next.bind(observer),
-                      error: observer.error.bind(observer),
-                      complete: observer.complete.bind(observer),
-                    };
-
-                    forward(operation).subscribe(subscriber);
-                  } catch (err) {
-                    observer.error(err);
+                  if (!accessToken) {
+                    throw new GraphQLError("Empty AccessToken");
                   }
-                })();
-              }
-            );
+
+                  // Retry the failed request
+                  const subscriber = {
+                    next: observer.next.bind(observer),
+                    error: observer.error.bind(observer),
+                    complete: observer.complete.bind(observer),
+                  };
+
+                  forward(operation).subscribe(subscriber);
+                } catch (err) {
+                  observer.error(err);
+                }
+              })();
+            });
 
             return observable;
         }
